@@ -6,3 +6,10 @@ mark 1
 mark 3
 unmark 1
 list
+list wrong
+bye wrong
+todo
+deadline no by
+event no from /to now
+event no to /from now
+random command

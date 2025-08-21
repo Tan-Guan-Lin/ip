@@ -52,3 +52,31 @@ ____________________________________________________________
 2. [D][ ] submit project report (by: next Sunday)
 3. [E][X] sleeping for an entire day (from: 200825 morning to: 200825 night)
 ____________________________________________________________
+Please do not add anything behind this command:
+correct usage: list
+____________________________________________________________
+____________________________________________________________
+Please do not add anything behind this command:
+correct usage: bye
+____________________________________________________________
+____________________________________________________________
+todo tasks need a description :O
+correct usage: todo <task_description>
+____________________________________________________________
+____________________________________________________________
+:( deadline tasks need deadlines
+correct usage: deadline <task_description> /by <task_deadline>
+____________________________________________________________
+____________________________________________________________
+:( events needs start and end dates
+correct usage: event <event_description> /from <start_date> /to <end_date>
+____________________________________________________________
+____________________________________________________________
+:( events needs start and end dates
+correct usage: event <event_description> /from <start_date> /to <end_date>
+____________________________________________________________
+____________________________________________________________
+____________________________________________________________
+bara-bara cannot recognize this command -> please try again
+____________________________________________________________
+____________________________________________________________

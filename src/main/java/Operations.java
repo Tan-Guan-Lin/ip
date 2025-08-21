@@ -46,6 +46,10 @@ public class Operations {
     }
 
     public static void printList() {
+        if(getListSize() == 0) {
+            System.out.println("bara-bara thinks you should add some tasks before listing them...");
+            return;
+        }
         int i = 1;
         for(Task task : taskList) {
             System.out.printf(String.format("%d. %s\n", i, task.toString()));
@@ -56,8 +60,13 @@ public class Operations {
     public static void mark(String input) {
         int i = Integer.parseInt(input.split("\\s")[1]);
         if(i > getListSize() || i < 1) {
-            throw new IllegalArgumentException("I cannot find this task in the list :(");
+            if(getListSize() == 0) {
+                throw new IndexOutOfBoundsException("bara-bara can't see your tasks -- add some tasks now! " +
+                        "\n usage: todo <task_name> OR deadline <task_name> /by <task_deadline> OR event <task_name> /from <start_date> /to <end_date>");
+            }
+            throw new IndexOutOfBoundsException(String.format("bara-bara can't find this task in the list :( \n range: %d - %d", 1, getListSize()));
         }
+
         taskList.get(i - 1).mark();
         System.out.println("Nice! I've marked this task as done:");
         printTask(i);
@@ -66,7 +75,11 @@ public class Operations {
     public static void unMark(String input) {
         int i = Integer.parseInt(input.split("\\s")[1]);
         if(i > getListSize() || i < 1) {
-            throw new IllegalArgumentException("I cannot find this task in the list :(");
+            if(getListSize() == 0) {
+                throw new IndexOutOfBoundsException("bara-bara can't see your tasks -- add some tasks now! " +
+                        "\n usage: todo <task_name> OR deadline <task_name> /by <task_deadline> OR event <task_name> /from <start_date> /to <end_date>");
+            }
+            throw new IndexOutOfBoundsException(String.format("bara-bara can't find this task in the list :( \n range: %d - %d", 1, getListSize()));
         }
         taskList.get(i - 1).unMark();
         System.out.println("OK, I've marked this task as not done yet:");
