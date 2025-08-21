@@ -5,15 +5,16 @@ public class Bara {
 
     public static void main(String[] args) {
         Operations.greet();
+        Scanner sc = new Scanner(System.in);
         program:
-        while(true) {
-            Scanner sc = new Scanner(System.in);
+        while(sc.hasNextLine()) {
             String input = sc.nextLine();
             Command command = Parser.parse(input);
             Operations.printLine();
             switch(command) {
                 case BYE -> {
                     Operations.exit();
+                    sc.close();
                     break program;
                 }
                 case LIST -> Operations.printList();
