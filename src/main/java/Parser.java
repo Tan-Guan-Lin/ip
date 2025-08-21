@@ -25,10 +25,9 @@ public class Parser {
                     ret = Command.MARK;
                 } else {
                     throw new IllegalArgumentException("""
-                            unmark requires an integer argument!
+                            mark requires an integer argument!
                             correct usage: unmark <task_number>
-                            where task_number is the number in front of the task after the list command
-                            """);
+                            where task_number is the number in front of the task after the list command""");
                 }
                 break;
             case "unmark":
@@ -38,8 +37,7 @@ public class Parser {
                     throw new IllegalArgumentException("""
                             unmark requires an integer argument!
                             correct usage: unmark <task_number>
-                            where task_number is the number in front of the task after the list command
-                            """);
+                            where task_number is the number in front of the task after the list command""");
                 }
                 break;
             case "todo":
@@ -64,6 +62,16 @@ public class Parser {
                 } else {
                     throw new IllegalArgumentException(":( events needs start and end dates\n" +
                             "correct usage: event <event_description> /from <start_date> /to <end_date>");
+                }
+                break;
+            case "delete":
+                if(validDelete(tokens, input)) {
+                    ret = Command.DELETE;
+                } else {
+                    throw new IllegalArgumentException("""
+                            delete requires an integer argument!
+                            correct usage: unmark <task_number>
+                            where task_number is the number in front of the task after the list command""");
                 }
                 break;
             default:
@@ -92,5 +100,9 @@ public class Parser {
 
     private static boolean validEvent(String input) {
         return Pattern.matches("event\\s.*\\s/from\\s.*\\s/to\\s.*", input);
+    }
+    private static boolean validDelete(String[] tokens, String input) {
+        return tokens.length == 2 &&
+                Pattern.matches("delete\\s\\d+", input);
     }
 }

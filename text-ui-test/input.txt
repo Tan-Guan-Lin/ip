@@ -5,7 +5,6 @@ list
 mark 1
 mark 3
 unmark 1
-list
 list wrong
 bye wrong
 todo
@@ -13,3 +12,14 @@ deadline no by
 event no from /to now
 event no to /from now
 random command
+mark
+mark not_number
+mark 12
+unmark
+unmark not_number
+unmark 12
+delete
+delete not_number
+delete 12
+delete 1
+list

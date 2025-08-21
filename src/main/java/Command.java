@@ -6,5 +6,6 @@ public enum Command {
     MARK,
     UNMARK,
     BYE,
-    INVALID;
+    INVALID,
+    DELETE;
 }

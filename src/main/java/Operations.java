@@ -64,7 +64,8 @@ public class Operations {
                 throw new IndexOutOfBoundsException("bara-bara can't see your tasks -- add some tasks now! " +
                         "\n usage: todo <task_name> OR deadline <task_name> /by <task_deadline> OR event <task_name> /from <start_date> /to <end_date>");
             }
-            throw new IndexOutOfBoundsException(String.format("bara-bara can't find this task in the list :( \n range: %d - %d", 1, getListSize()));
+            throw new IndexOutOfBoundsException(String.format("bara-bara can't find this task in the list :(\n" +
+                    "range: %d - %d", 1, getListSize()));
         }
 
         taskList.get(i - 1).mark();
@@ -79,7 +80,8 @@ public class Operations {
                 throw new IndexOutOfBoundsException("bara-bara can't see your tasks -- add some tasks now! " +
                         "\n usage: todo <task_name> OR deadline <task_name> /by <task_deadline> OR event <task_name> /from <start_date> /to <end_date>");
             }
-            throw new IndexOutOfBoundsException(String.format("bara-bara can't find this task in the list :( \n range: %d - %d", 1, getListSize()));
+            throw new IndexOutOfBoundsException(String.format("bara-bara can't find this task in the list :(\n" +
+                    "range: %d - %d", 1, getListSize()));
         }
         taskList.get(i - 1).unMark();
         System.out.println("OK, I've marked this task as not done yet:");
@@ -128,5 +130,22 @@ public class Operations {
         System.out.println(curr.toString());
         System.out.println("Now you have " + Operations.getListSize() + " tasks in the list.");
 
+    }
+
+    public static void delete(String input) {
+        int i = Integer.parseInt(input.split("\\s")[1]);
+        if(i > getListSize() || i < 1) {
+            if(getListSize() == 0) {
+                throw new IndexOutOfBoundsException("bara-bara can't see your tasks -- add some tasks now! " +
+                        "\n usage: todo <task_name> OR deadline <task_name> /by <task_deadline> OR event <task_name> /from <start_date> /to <end_date>");
+            }
+            throw new IndexOutOfBoundsException(String.format("bara-bara can't find this task in the list :(\n" +
+                    "range: %d - %d", 1, getListSize()));
+        }
+        Task curr = taskList.get(i - 1);
+        taskList.remove(i - 1);
+        System.out.println("Noted. I've removed this task:");
+        System.out.println(curr.toString());
+        System.out.println("Now you have " + Operations.getListSize() + " tasks in the list.");
     }
 }

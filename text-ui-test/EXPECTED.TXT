@@ -47,11 +47,6 @@ ____________________________________________________________
 OK, I've marked this task as not done yet:
 [T][ ] tutorial 1
 ____________________________________________________________
-____________________________________________________________
-1. [T][ ] tutorial 1
-2. [D][ ] submit project report (by: next Sunday)
-3. [E][X] sleeping for an entire day (from: 200825 morning to: 200825 night)
-____________________________________________________________
 Please do not add anything behind this command:
 correct usage: list
 ____________________________________________________________
@@ -79,4 +74,58 @@ ____________________________________________________________
 ____________________________________________________________
 bara-bara cannot recognize this command -> please try again
 ____________________________________________________________
+____________________________________________________________
+mark requires an integer argument!
+correct usage: unmark <task_number>
+where task_number is the number in front of the task after the list command
+____________________________________________________________
+____________________________________________________________
+mark requires an integer argument!
+correct usage: unmark <task_number>
+where task_number is the number in front of the task after the list command
+____________________________________________________________
+____________________________________________________________
+____________________________________________________________
+bara-bara can't find this task in the list :(
+range: 1 - 3
+____________________________________________________________
+____________________________________________________________
+unmark requires an integer argument!
+correct usage: unmark <task_number>
+where task_number is the number in front of the task after the list command
+____________________________________________________________
+____________________________________________________________
+unmark requires an integer argument!
+correct usage: unmark <task_number>
+where task_number is the number in front of the task after the list command
+____________________________________________________________
+____________________________________________________________
+____________________________________________________________
+bara-bara can't find this task in the list :(
+range: 1 - 3
+____________________________________________________________
+____________________________________________________________
+delete requires an integer argument!
+correct usage: unmark <task_number>
+where task_number is the number in front of the task after the list command
+____________________________________________________________
+____________________________________________________________
+delete requires an integer argument!
+correct usage: unmark <task_number>
+where task_number is the number in front of the task after the list command
+____________________________________________________________
+____________________________________________________________
+____________________________________________________________
+bara-bara can't find this task in the list :(
+range: 1 - 3
+____________________________________________________________
+____________________________________________________________
+____________________________________________________________
+Noted. I've removed this task:
+[T][ ] tutorial 1
+Now you have 2 tasks in the list.
+____________________________________________________________
+____________________________________________________________
+1. [D][ ] submit project report (by: next Sunday)
+2. [E][X] sleeping for an entire day (from: 200825 morning to: 200825 night)
 ____________________________________________________________
