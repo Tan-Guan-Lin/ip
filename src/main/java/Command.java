@@ -7,5 +7,5 @@ public enum Command {
     UNMARK,
     BYE,
     INVALID,
-    DELETE;
+    DELETE
 }
