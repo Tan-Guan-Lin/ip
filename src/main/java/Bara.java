@@ -1,10 +1,12 @@
 import java.util.Scanner;
 
+
 public class Bara {
 
 
     public static void main(String[] args) {
         Operations.greet();
+        Operations.initialize();
         Scanner sc = new Scanner(System.in);
         while(sc.hasNextLine()) {
             String input = sc.nextLine();

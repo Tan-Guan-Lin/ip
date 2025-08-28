@@ -8,8 +8,20 @@ public class Event extends Task {
         this.to = to;
     }
 
+    public Event(String description, boolean isDone, String from, String to) {
+        super(description, isDone);
+        this.from = from;
+        this.to = to;
+    }
+
     @Override
     public String toString() {
         return "[E]" + super.toString() + " (from: " + from + " to: " + to + ")";
+    }
+
+    @Override
+    public String store() {
+        return "E" + " | " + (this.isDone ? 1 : 0) + " | " + this.description + " | "
+                + this.from + " | " + this.to + "\n";
     }
 }
