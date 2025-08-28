@@ -26,11 +26,12 @@ public class Bara {
                     case CREATE_DEADLINE -> Operations.createDeadline(input);
                     case CREATE_EVENT -> Operations.createEvent(input);
                     case DELETE -> Operations.delete(input);
-                    case INVALID -> throw new IllegalArgumentException("bara-bara cannot recognize this command -> please try again");
+                    case INVALID ->
+                            throw new IllegalArgumentException(
+                                    "bara-bara cannot recognize this command -> please try again");
                 }
             } catch (IllegalArgumentException | IndexOutOfBoundsException e) {
                 System.out.println(e.getMessage());
-                Operations.printLine();
             }
 
 

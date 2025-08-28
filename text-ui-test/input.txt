@@ -1,25 +1,7 @@
-todo tutorial 1
-deadline submit project report /by next Sunday
-event sleeping for an entire day /from 200825 morning /to 200825 night
 list
+todo shopping
 mark 1
-mark 3
-unmark 1
-list wrong
-bye wrong
-todo
-deadline no by
-event no from /to now
-event no to /from now
-random command
-mark
-mark not_number
-mark 12
-unmark
-unmark not_number
-unmark 12
-delete
-delete not_number
-delete 12
-delete 1
-list
+deadline ip /by 2025-08-25 23:59
+deadline tp /by 2025-08-29
+event national day /from 1965-08-09 00:00 /to 1965-08-09 23:59
+event team meeting /from 2025-08-27 12:00 /to 2025-08-27 14:00
