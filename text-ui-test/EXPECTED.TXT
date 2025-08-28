@@ -16,116 +16,34 @@ Hello! I'm bara-bara
 What can I do for you?
 ____________________________________________________________
 ____________________________________________________________
+bara-bara thinks you should add some tasks before listing them...
+____________________________________________________________
+____________________________________________________________
 Got it. I've added this task:
-[T][ ] tutorial 1
+[T][ ] shopping
 Now you have 1 tasks in the list.
 ____________________________________________________________
 ____________________________________________________________
+Nice! I've marked this task as done:
+[T][X] shopping
+____________________________________________________________
+____________________________________________________________
 Got it. I've added this task:
-[D][ ] submit project report (by: next Sunday)
+[D][ ] ip (by: AUG 25 2025 11.59PM)
 Now you have 2 tasks in the list.
 ____________________________________________________________
 ____________________________________________________________
 Got it. I've added this task:
-[E][ ] sleeping for an entire day (from: 200825 morning to: 200825 night)
+[D][ ] tp (by: AUG 29 2025 12.00AM)
 Now you have 3 tasks in the list.
 ____________________________________________________________
 ____________________________________________________________
-1. [T][ ] tutorial 1
-2. [D][ ] submit project report (by: next Sunday)
-3. [E][ ] sleeping for an entire day (from: 200825 morning to: 200825 night)
+Got it. I've added this task:
+[E][ ] national day (from: AUG 09 1965 12.00AM to: AUG 09 1965 11.59PM)
+Now you have 4 tasks in the list.
 ____________________________________________________________
 ____________________________________________________________
-Nice! I've marked this task as done:
-[T][X] tutorial 1
-____________________________________________________________
-____________________________________________________________
-Nice! I've marked this task as done:
-[E][X] sleeping for an entire day (from: 200825 morning to: 200825 night)
-____________________________________________________________
-____________________________________________________________
-OK, I've marked this task as not done yet:
-[T][ ] tutorial 1
-____________________________________________________________
-Please do not add anything behind this command:
-correct usage: list
-____________________________________________________________
-____________________________________________________________
-Please do not add anything behind this command:
-correct usage: bye
-____________________________________________________________
-____________________________________________________________
-todo tasks need a description :O
-correct usage: todo <task_description>
-____________________________________________________________
-____________________________________________________________
-:( deadline tasks need deadlines
-correct usage: deadline <task_description> /by <task_deadline>
-____________________________________________________________
-____________________________________________________________
-:( events needs start and end dates
-correct usage: event <event_description> /from <start_date> /to <end_date>
-____________________________________________________________
-____________________________________________________________
-:( events needs start and end dates
-correct usage: event <event_description> /from <start_date> /to <end_date>
-____________________________________________________________
-____________________________________________________________
-____________________________________________________________
-bara-bara cannot recognize this command -> please try again
-____________________________________________________________
-____________________________________________________________
-mark requires an integer argument!
-correct usage: unmark <task_number>
-where task_number is the number in front of the task after the list command
-____________________________________________________________
-____________________________________________________________
-mark requires an integer argument!
-correct usage: unmark <task_number>
-where task_number is the number in front of the task after the list command
-____________________________________________________________
-____________________________________________________________
-____________________________________________________________
-bara-bara can't find this task in the list :(
-range: 1 - 3
-____________________________________________________________
-____________________________________________________________
-unmark requires an integer argument!
-correct usage: unmark <task_number>
-where task_number is the number in front of the task after the list command
-____________________________________________________________
-____________________________________________________________
-unmark requires an integer argument!
-correct usage: unmark <task_number>
-where task_number is the number in front of the task after the list command
-____________________________________________________________
-____________________________________________________________
-____________________________________________________________
-bara-bara can't find this task in the list :(
-range: 1 - 3
-____________________________________________________________
-____________________________________________________________
-delete requires an integer argument!
-correct usage: unmark <task_number>
-where task_number is the number in front of the task after the list command
-____________________________________________________________
-____________________________________________________________
-delete requires an integer argument!
-correct usage: unmark <task_number>
-where task_number is the number in front of the task after the list command
-____________________________________________________________
-____________________________________________________________
-____________________________________________________________
-bara-bara can't find this task in the list :(
-range: 1 - 3
-____________________________________________________________
-____________________________________________________________
-____________________________________________________________
-Noted. I've removed this task:
-[T][ ] tutorial 1
-Now you have 2 tasks in the list.
-____________________________________________________________
-____________________________________________________________
-1. [D][ ] submit project report (by: next Sunday)
-2. [E][X] sleeping for an entire day (from: 200825 morning to: 200825 night)
+Got it. I've added this task:
+[E][ ] team meeting (from: AUG 27 2025 12.00PM to: AUG 27 2025 2.00PM)
+Now you have 5 tasks in the list.
 ____________________________________________________________
