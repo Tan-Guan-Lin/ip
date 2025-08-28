@@ -19,6 +19,12 @@ then
     exit 1
 fi
 
+# delete the data file from previous run
+if [ -e "./data/Bara.txt" ]
+then
+    rm "./data/Bara.txt"
+fi
+
 # run the program, feed commands from input.txt file and redirect the output to the ACTUAL.TXT
 java -classpath ../bin Bara < input.txt > ACTUAL.TXT
 
