@@ -19,6 +19,7 @@ public class Bara {
                         sc.close();
                         return;
                     }
+
                     case LIST -> Operations.printList();
                     case MARK -> Operations.mark(input);
                     case UNMARK -> Operations.unMark(input);
