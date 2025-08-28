@@ -1,8 +1,16 @@
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.nio.file.*;
 import java.util.ArrayList;
+import java.util.Scanner;
+
 
 public class Operations {
     protected static String horizontalLine = "____________________________________________________________";
     protected static ArrayList<Task> taskList = new ArrayList<>();
+    protected static java.nio.file.Path path = Paths.get("data", "Bara.txt");
+
     public static void greet() {
         String capybara = """
               
@@ -36,9 +44,79 @@ public class Operations {
 
     }
 
+    public static void initialize() {
+        File file = path.toFile();
+        try {
+            if (!file.exists()) {
+                Path parentDir = path.getParent();
+                if (parentDir != null && !Files.exists(parentDir)) {
+                    Files.createDirectories(parentDir);
+                }
+                Files.createFile(path);
+                System.out.println("file created!"); // test
+            }
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+
+        try {
+            Scanner sc = new Scanner(file);
+            while(sc.hasNextLine()) {
+                String curr = sc.nextLine();
+                String[] task = curr.split("\\s\\|\\s");
+
+                try{
+                    if(!task[1].equals("1") && !task[1].equals("0")){
+                        throw new IllegalArgumentException("Invalid mark status");
+                    }
+                    switch (task[0]) {
+                    case "T":
+                        if(task.length != 3) {
+                            throw new IllegalArgumentException("Format error");
+                        }
+                        taskList.add(new Todo(task[2], Integer.parseInt(task[1]) == 1));
+                        break;
+                    case "D":
+                        if(task.length != 4) {
+                            throw new IllegalArgumentException("Format error");
+                        }
+                        taskList.add(new Deadline(task[2], Integer.parseInt(task[1]) == 1, task[3]));
+                        break;
+                    case "E":
+                        if(task.length != 5) {
+                            throw new IllegalArgumentException("Format error");
+                        }
+                        taskList.add(new Event(task[2], Integer.parseInt(task[1]) == 1, task[3], task[4]));
+                        break;
+                    default:
+                        throw new IllegalArgumentException("Task type invalid");
+
+                    }
+                } catch (IllegalArgumentException e) {
+                    System.out.println("Corrupted file: " + e.getMessage());
+                    exit();
+                }
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println(e.getMessage());
+            exit();
+        }
+
+
+    }
     public static void exit() {
+        StringBuilder data = new StringBuilder();
+        for(Task t : taskList) {
+            data.append(t.store());
+        }
+        try {
+            Files.writeString(path, data, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
         System.out.println("Bye. Hope to see you again soon!");
         Operations.printLine();
+
     }
 
     public static void printLine() {
