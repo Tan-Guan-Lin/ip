@@ -1,42 +1,38 @@
+
 import java.util.Scanner;
 
-
 public class Bara {
-
+    private static TaskList taskList = new TaskList();
 
     public static void main(String[] args) {
-        Operations.greet();
-        Operations.initialize();
-        Scanner sc = new Scanner(System.in);
-        while(sc.hasNextLine()) {
-            String input = sc.nextLine();
-            try{
-                Command command = Parser.parse(input);
-                Operations.printLine();
-                switch(command) {
-                    case BYE -> {
-                        Operations.exit();
-                        sc.close();
-                        return;
-                    }
+        UI.greet();
+        Storage.initialize();
+        taskList.loadFromStorage();
 
-                    case LIST -> Operations.printList();
-                    case MARK -> Operations.mark(input);
-                    case UNMARK -> Operations.unMark(input);
-                    case CREATE_TODO -> Operations.createTodo(input);
-                    case CREATE_DEADLINE -> Operations.createDeadline(input);
-                    case CREATE_EVENT -> Operations.createEvent(input);
-                    case DELETE -> Operations.delete(input);
-                    case INVALID ->
-                            throw new IllegalArgumentException(
-                                    "bara-bara cannot recognize this command -> please try again");
+        Scanner sc = new Scanner(System.in);
+        boolean isRunning = true;
+
+        while (isRunning && sc.hasNextLine()) {
+            String input = sc.nextLine();
+            UI.printLine();
+
+            try {
+                Command command = Parser.parse(input, taskList);
+                command.execute(taskList);
+
+                if (command.isExit()) {
+                    isRunning = false;
                 }
-            } catch (IllegalArgumentException | IndexOutOfBoundsException e) {
-                System.out.println(e.getMessage());
+
+
+            } catch (Exception e) {
+                UI.showMessage("An unexpected error occurred: " + e.getMessage());
             }
 
-
-            Operations.printLine();
+            UI.printLine();
         }
+
+        sc.close();
     }
+
 }

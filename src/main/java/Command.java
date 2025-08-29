@@ -1,11 +1,14 @@
-public enum Command {
-    CREATE_TODO,
-    CREATE_EVENT,
-    CREATE_DEADLINE,
-    LIST,
-    MARK,
-    UNMARK,
-    BYE,
-    INVALID,
-    DELETE
+public abstract class Command {
+    protected CommandType type;
+
+    public Command(CommandType type) {
+        this.type = type;
+    }
+
+    public abstract void execute(TaskList taskList) throws Exception;
+
+    public boolean isExit() {
+        return type == CommandType.BYE;
+    }
+
 }
