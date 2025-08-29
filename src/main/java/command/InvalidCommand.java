@@ -15,4 +15,8 @@ public class InvalidCommand extends Command {
     public void execute(TaskList taskList) {
         UI.showMessage(message);
     }
+
+    public String getMessage() {
+        return this.message;
+    }
 }
