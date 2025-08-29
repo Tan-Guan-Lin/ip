@@ -1,4 +1,3 @@
-package bara;
 
 import java.util.Scanner;
 
@@ -27,7 +26,7 @@ public class Bara {
 
 
             } catch (Exception e) {
-                UI.showError("An unexpected error occurred: " + e.getMessage());
+                UI.showMessage("An unexpected error occurred: " + e.getMessage());
             }
 
             UI.printLine();

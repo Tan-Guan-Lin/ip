@@ -1,4 +1,14 @@
-package PACKAGE_NAME;
+public abstract class Command {
+    protected CommandType type;
 
-public class Command {
+    public Command(CommandType type) {
+        this.type = type;
+    }
+
+    public abstract void execute(TaskList taskList) throws Exception;
+
+    public boolean isExit() {
+        return type == CommandType.BYE;
+    }
+
 }

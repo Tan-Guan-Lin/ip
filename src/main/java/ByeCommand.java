@@ -1,4 +1,10 @@
-package PACKAGE_NAME;
+public class ByeCommand extends Command {
+    public ByeCommand() {
+        super(CommandType.BYE);
+    }
 
-public class ByeCommand {
+    @Override
+    public void execute(TaskList taskList) {
+        UI.showExit();
+    }
 }
