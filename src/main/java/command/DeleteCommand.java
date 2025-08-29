@@ -1,3 +1,7 @@
+package command;
+
+import tasklist.TaskList;
+
 public class DeleteCommand extends Command {
     private int index;
 

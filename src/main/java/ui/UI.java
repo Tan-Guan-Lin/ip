@@ -1,3 +1,5 @@
+package ui;
+
 public class UI {
     protected static String horizontalLine = "____________________________________________________________";
 
