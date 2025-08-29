@@ -1,3 +1,10 @@
+package bara;
+
+import command.Command;
+import parser.Parser;
+import storage.Storage;
+import tasklist.TaskList;
+import ui.UI;
 
 import java.util.Scanner;
 

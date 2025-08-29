@@ -1,3 +1,10 @@
+package command;
+
+import tasklist.TaskList;
+import task.Deadline;
+import task.Task;
+import ui.UI;
+
 public class DeadlineCommand extends Command {
     private String description;
     private String by;

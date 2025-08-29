@@ -1,3 +1,12 @@
+package tasklist;
+
+import storage.Storage;
+import task.Deadline;
+import task.Event;
+import task.Task;
+import task.Todo;
+import ui.UI;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -49,7 +58,7 @@ public class TaskList {
                         tasks.add(new Event(description, isDone, from, to));
                         break;
                     default:
-                        throw new IllegalArgumentException("Task type invalid");
+                        throw new IllegalArgumentException("task.Task type invalid");
                     }
                 } catch (IllegalArgumentException e) {
                     UI.showMessage("Corrupted file: " + e.getMessage());

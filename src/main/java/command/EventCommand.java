@@ -1,3 +1,10 @@
+package command;
+
+import tasklist.TaskList;
+import task.Event;
+import task.Task;
+import ui.UI;
+
 public class EventCommand extends Command {
     private String description;
     private String from;
