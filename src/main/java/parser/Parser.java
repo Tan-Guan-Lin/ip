@@ -5,7 +5,20 @@ import tasklist.TaskList;
 
 import java.util.regex.Pattern;
 
+/**
+ * Parses user input strings into executable Command objects.
+ * Handles validation and conversion of user commands.
+ */
 public class Parser {
+
+    /**
+     * Parses the user input string and returns the corresponding Command object.
+     * Validates input format and handles various command types with appropriate error messages.
+     *
+     * @param input the user input string to parse
+     * @param taskList the current task list used for validation (e.g., index bounds checking)
+     * @return a Command object corresponding to the parsed input, or InvalidCommand on error
+     */
     public static Command parse(String input, TaskList taskList) {
         String[] tokens = input.split("\\s");
 
