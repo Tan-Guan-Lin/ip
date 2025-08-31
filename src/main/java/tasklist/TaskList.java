@@ -3,7 +3,10 @@ package tasklist;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
+
+import javax.naming.directory.SearchResult;
 
 import storage.Storage;
 import task.Deadline;
@@ -124,5 +127,15 @@ public class TaskList {
                     String.format("bara-bara can't find this task in the list :(\nrange: %d - %d",
                             1, tasks.size()));
         }
+    }
+
+    public List<Task> findTasks(String search) {
+        List<Task> searchResult = new ArrayList<>();
+        for(Task task : tasks) {
+            if(task.getDescription().contains(search)) {
+                searchResult.add(task);
+            }
+        }
+        return searchResult;
     }
 }

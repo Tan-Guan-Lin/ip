@@ -36,5 +36,6 @@ public class UI {
 
     public static void showExit() {
         System.out.println("Bye. Hope to see you again soon!");
-    }
+    };
+
 }

@@ -14,3 +14,5 @@ todo
 deadline tp submission
 event CS2103T exams /from 2025-12-12
 event CS2103T exams /from 12/12/2025 /to 13/12/2025
+find cplusplus
+find national

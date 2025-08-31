@@ -7,6 +7,7 @@ import command.Command;
 import command.DeadlineCommand;
 import command.DeleteCommand;
 import command.EventCommand;
+import command.FindCommand;
 import command.InvalidCommand;
 import command.ListCommand;
 import command.MarkCommand;
@@ -74,6 +75,13 @@ public class Parser {
             case "delete":
                 int deleteIndex = validateAndGetIndex(tokens, input, "delete", taskList.size());
                 return new DeleteCommand(deleteIndex);
+
+            case "find":
+                StringBuilder searchTerm = new StringBuilder();
+                for(int i = 1; i < tokens.length; i++) {
+                    searchTerm.append(tokens[i]);
+                }
+                return new FindCommand(searchTerm.toString());
 
             default:
                 return new InvalidCommand("bara-bara cannot recognize this command -> please try again");
