@@ -1,8 +1,8 @@
 package command;
 
-import tasklist.TaskList;
 import task.Deadline;
 import task.Task;
+import tasklist.TaskList;
 import ui.UI;
 
 /**
@@ -17,7 +17,7 @@ public class DeadlineCommand extends Command {
      * Constructs a DeadlineCommand with the given description and deadline.
      *
      * @param description the description of the deadline task
-     * @param by the deadline date/time string
+     * @param by          the deadline date/time string
      */
     public DeadlineCommand(String description, String by) {
         super(CommandType.CREATE_DEADLINE);
