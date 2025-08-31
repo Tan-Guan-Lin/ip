@@ -5,30 +5,48 @@ package command;
  * Each enum value corresponds to a specific user command.
  */
 public enum CommandType {
-    /** Command to create a new todo task */
+    /**
+     * Command to create a new todo task
+     */
     CREATE_TODO,
 
-    /** Command to create a new event task */
+    /**
+     * Command to create a new event task
+     */
     CREATE_EVENT,
 
-    /** Command to create a new deadline task */
+    /**
+     * Command to create a new deadline task
+     */
     CREATE_DEADLINE,
 
-    /** Command to list all tasks */
+    /**
+     * Command to list all tasks
+     */
     LIST,
 
-    /** Command to mark a task as completed */
+    /**
+     * Command to mark a task as completed
+     */
     MARK,
 
-    /** Command to unmark a completed task */
+    /**
+     * Command to unmark a completed task
+     */
     UNMARK,
 
-    /** Command to exit the application */
+    /**
+     * Command to exit the application
+     */
     BYE,
 
-    /** Represents an invalid or unrecognized command */
+    /**
+     * Represents an invalid or unrecognized command
+     */
     INVALID,
 
-    /** Command to delete a task */
+    /**
+     * Command to delete a task
+     */
     DELETE
 }

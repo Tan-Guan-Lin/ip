@@ -8,11 +8,14 @@ import tasklist.TaskList;
  */
 public abstract class Command {
 
-    /** Command type of this command */
+    /**
+     * Command type of this command
+     */
     protected CommandType type;
 
     /**
      * Creates a Command with the specified type.
+     *
      * @param type the command type
      */
     public Command(CommandType type) {
@@ -21,6 +24,7 @@ public abstract class Command {
 
     /**
      * Executes the command on the given task list.
+     *
      * @param taskList the task list to operate on
      * @throws Exception if execution fails
      */
@@ -28,6 +32,7 @@ public abstract class Command {
 
     /**
      * Checks if this command is an exit command.
+     *
      * @return true if this is an exit command, false otherwise
      */
     public boolean isExit() {

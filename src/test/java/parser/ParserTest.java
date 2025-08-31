@@ -1,17 +1,17 @@
 package parser;
 
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
 import command.ByeCommand;
 import command.Command;
 import command.InvalidCommand;
 import command.ListCommand;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import task.Todo;
 import tasklist.TaskList;
-
-
-
-import static org.junit.jupiter.api.Assertions.*;
 
 public class ParserTest {
     private TaskList taskList;

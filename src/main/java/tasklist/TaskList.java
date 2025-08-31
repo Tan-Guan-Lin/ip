@@ -1,16 +1,16 @@
 package tasklist;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.Scanner;
+
 import storage.Storage;
 import task.Deadline;
 import task.Event;
 import task.Task;
 import task.Todo;
 import ui.UI;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.Scanner;
 
 public class TaskList {
     protected ArrayList<Task> tasks;

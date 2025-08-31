@@ -1,12 +1,12 @@
 package bara;
 
+import java.util.Scanner;
+
 import command.Command;
 import parser.Parser;
 import storage.Storage;
 import tasklist.TaskList;
 import ui.UI;
-
-import java.util.Scanner;
 
 public class Bara {
     private static TaskList taskList = new TaskList();

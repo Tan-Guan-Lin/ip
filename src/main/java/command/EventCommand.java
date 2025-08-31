@@ -1,8 +1,8 @@
 package command;
 
-import tasklist.TaskList;
 import task.Event;
 import task.Task;
+import tasklist.TaskList;
 import ui.UI;
 
 /**
@@ -18,8 +18,8 @@ public class EventCommand extends Command {
      * Constructs an EventCommand with the given description and time period.
      *
      * @param description the description of the event task
-     * @param from the start time/date of the event
-     * @param to the end time/date of the event
+     * @param from        the start time/date of the event
+     * @param to          the end time/date of the event
      */
     public EventCommand(String description, String from, String to) {
         super(CommandType.CREATE_EVENT);

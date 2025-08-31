@@ -1,9 +1,18 @@
 package parser;
 
-import command.*;
-import tasklist.TaskList;
-
 import java.util.regex.Pattern;
+
+import command.ByeCommand;
+import command.Command;
+import command.DeadlineCommand;
+import command.DeleteCommand;
+import command.EventCommand;
+import command.InvalidCommand;
+import command.ListCommand;
+import command.MarkCommand;
+import command.TodoCommand;
+import command.UnmarkCommand;
+import tasklist.TaskList;
 
 /**
  * Parses user input strings into executable Command objects.
@@ -15,7 +24,7 @@ public class Parser {
      * Parses the user input string and returns the corresponding Command object.
      * Validates input format and handles various command types with appropriate error messages.
      *
-     * @param input the user input string to parse
+     * @param input    the user input string to parse
      * @param taskList the current task list used for validation (e.g., index bounds checking)
      * @return a Command object corresponding to the parsed input, or InvalidCommand on error
      */
