@@ -33,4 +33,8 @@ public class Task {
     public String store() {
         return "";
     }
+
+    public String getDescription() {
+        return this.description;
+    }
 }

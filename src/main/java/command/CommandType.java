@@ -48,5 +48,10 @@ public enum CommandType {
     /**
      * Command to delete a task
      */
-    DELETE
+    DELETE,
+
+    /**
+     * Command to find a task with a certain String within its description
+     */
+    FIND
 }
