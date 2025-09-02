@@ -27,8 +27,8 @@ public class InvalidCommand extends Command {
      * @param taskList the task list (not used in this command)
      */
     @Override
-    public void execute(TaskList taskList) {
-        UI.showMessage(message);
+    public String execute(TaskList taskList) {
+        return UI.showMessage(message);
     }
 
     /**

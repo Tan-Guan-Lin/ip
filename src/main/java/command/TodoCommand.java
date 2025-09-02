@@ -30,11 +30,11 @@ public class TodoCommand extends Command {
      * @param taskList the task list to which the todo will be added
      */
     @Override
-    public void execute(TaskList taskList) {
+    public String execute(TaskList taskList) {
         Task todo = new Todo(description);
         taskList.addTask(todo);
-        UI.showMessage("Got it. I've added this task:");
-        UI.showMessage(todo.toString());
-        UI.showMessage("Now you have " + taskList.size() + " tasks in the list.");
+        return UI.showMessage("Got it. I've added this task:")
+                + UI.showMessage(todo.toString())
+                + UI.showMessage("Now you have " + taskList.size() + " tasks in the list.");
     }
 }

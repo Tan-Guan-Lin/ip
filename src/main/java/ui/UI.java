@@ -3,7 +3,7 @@ package ui;
 public class UI {
     protected static String horizontalLine = "____________________________________________________________";
 
-    public static void greet() {
+    public static String greet() {
         String capybara2 = """
                               // __ //
                             /    O   \\_____________
@@ -18,24 +18,20 @@ public class UI {
                               \\  /\\  /       \\   /\\  /
                 """;
 
-        printLine();
-        System.out.println();
-        System.out.println(capybara2);
-        System.out.println("Hello! I'm bara-bara");
-        System.out.println("What can I do for you?");
-        printLine();
+        return "Hello! I'm bara-bara! \n"
+                + "What can I do for you?";
     }
 
-    public static void printLine() {
-        System.out.println(horizontalLine);
+    public static String printLine() {
+        return horizontalLine + "\n";
     }
 
-    public static void showMessage(String message) {
-        System.out.println(message);
+    public static String showMessage(String message) {
+        return message + "\n";
     }
 
-    public static void showExit() {
-        System.out.println("Bye. Hope to see you again soon!");
+    public static String showExit() {
+        return "Bye. Hope to see you again soon! \n";
     };
 
 }

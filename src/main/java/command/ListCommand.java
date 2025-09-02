@@ -22,7 +22,7 @@ public class ListCommand extends Command {
      * @param taskList the task list containing tasks to display
      */
     @Override
-    public void execute(TaskList taskList) {
-        taskList.printTasks();
+    public String execute(TaskList taskList) {
+        return taskList.printTasks();
     }
 }
