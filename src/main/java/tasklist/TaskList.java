@@ -6,8 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import javax.naming.directory.SearchResult;
-
 import storage.Storage;
 import task.Deadline;
 import task.Event;
@@ -131,8 +129,8 @@ public class TaskList {
 
     public List<Task> findTasks(String search) {
         List<Task> searchResult = new ArrayList<>();
-        for(Task task : tasks) {
-            if(task.getDescription().contains(search)) {
+        for (Task task : tasks) {
+            if (task.getDescription().contains(search)) {
                 searchResult.add(task);
             }
         }

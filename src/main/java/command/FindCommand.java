@@ -35,12 +35,12 @@ public class FindCommand extends Command {
     @Override
     public void execute(TaskList taskList) throws Exception {
         List<Task> searchResult = taskList.findTasks(search);
-        if(searchResult.isEmpty()) {
+        if (searchResult.isEmpty()) {
             UI.showMessage("No result found");
             return;
         }
         UI.showMessage("Here are the matching tasks in your list:");
-        for(Task task : searchResult) {
+        for (Task task : searchResult) {
             UI.showMessage(task.toString());
         }
     }

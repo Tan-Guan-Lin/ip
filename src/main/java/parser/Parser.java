@@ -78,7 +78,7 @@ public class Parser {
 
             case "find":
                 StringBuilder searchTerm = new StringBuilder();
-                for(int i = 1; i < tokens.length; i++) {
+                for (int i = 1; i < tokens.length; i++) {
                     searchTerm.append(tokens[i]);
                 }
                 return new FindCommand(searchTerm.toString());
@@ -93,16 +93,21 @@ public class Parser {
 
     private static void validateNoExtraArguments(String[] tokens, String command) {
         if (tokens.length != 1) {
-            throw new IllegalArgumentException("Please do not add anything behind " + command +
-                    " command\ncorrect usage: " + command);
+            throw new IllegalArgumentException("Please do not add anything behind "
+                    + command
+                    + " command\ncorrect usage: "
+                    + command);
         }
     }
 
     private static int validateAndGetIndex(String[] tokens, String input, String command, int size) {
         if (tokens.length != 2 || !Pattern.matches(command + "\\s\\d+", input)) {
-            throw new IllegalArgumentException(command + " requires an integer argument!\n" +
-                    "correct usage: " + command + " <task_number>\n" +
-                    "where task_number is the number in front of the task after the list command");
+            throw new IllegalArgumentException(command
+                    + " requires an integer argument!\n"
+                    + "correct usage: "
+                    + command
+                    + " <task_number>\n"
+                    + "where task_number is the number in front of the task after the list command");
         }
 
         int index = Integer.parseInt(tokens[1]) - 1;
@@ -117,22 +122,22 @@ public class Parser {
 
     private static void validateTodo(String input) {
         if (!Pattern.matches("todo\\s.*", input)) {
-            throw new IllegalArgumentException("todo tasks need a description :O\n" +
-                    "correct usage: todo <task_description>");
+            throw new IllegalArgumentException("todo tasks need a description :O\n"
+                    + "correct usage: todo <task_description>");
         }
     }
 
     private static void validateDeadline(String input) {
         if (!Pattern.matches("deadline\\s.*\\s/by\\s.*", input)) {
-            throw new IllegalArgumentException(":( deadline tasks need deadlines\n" +
-                    "correct usage: deadline <task_description> /by <task_deadline>");
+            throw new IllegalArgumentException(":( deadline tasks need deadlines\n"
+                    + "correct usage: deadline <task_description> /by <task_deadline>");
         }
     }
 
     private static void validateEvent(String input) {
         if (!Pattern.matches("event\\s.*\\s/from\\s.*\\s/to\\s.*", input)) {
-            throw new IllegalArgumentException(":( events needs start and end dates\n" +
-                    "correct usage: event <event_description> /from <start_date> /to <end_date>");
+            throw new IllegalArgumentException(":( events needs start and end dates\n"
+                    + "correct usage: event <event_description> /from <start_date> /to <end_date>");
         }
     }
 }
