@@ -33,11 +33,11 @@ public class DeadlineCommand extends Command {
      * @param taskList the task list to which the deadline will be added
      */
     @Override
-    public void execute(TaskList taskList) {
+    public String execute(TaskList taskList) {
         Task deadline = new Deadline(description, by);
         taskList.addTask(deadline);
-        UI.showMessage("Got it. I've added this task:");
-        UI.showMessage(deadline.toString());
-        UI.showMessage("Now you have " + taskList.size() + " tasks in the list.");
+        return UI.showMessage("Got it. I've added this task:")
+                + UI.showMessage(deadline.toString())
+                + UI.showMessage("Now you have " + taskList.size() + " tasks in the list.");
     }
 }

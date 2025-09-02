@@ -28,9 +28,9 @@ public class UnmarkCommand extends Command {
      * @param taskList the task list containing the task to unmark
      */
     @Override
-    public void execute(TaskList taskList) {
+    public String execute(TaskList taskList) {
         taskList.unmarkTask(index);
-        UI.showMessage("OK, I've marked this task as not done yet:");
-        UI.showMessage(taskList.getAllTasks().get(index).toString());
+        return UI.showMessage("OK, I've marked this task as not done yet:")
+                + UI.showMessage(taskList.getAllTasks().get(index).toString());
     }
 }

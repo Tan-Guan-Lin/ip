@@ -23,7 +23,7 @@ public class ByeCommand extends Command {
      * @param taskList the task list (not used in this command)
      */
     @Override
-    public void execute(TaskList taskList) {
-        UI.showExit();
+    public String execute(TaskList taskList) {
+        return UI.showExit();
     }
 }

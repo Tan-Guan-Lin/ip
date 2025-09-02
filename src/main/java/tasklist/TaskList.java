@@ -97,23 +97,24 @@ public class TaskList {
         Storage.saveTasks(this);
     }
 
-    public void deleteTask(int index) {
+    public String deleteTask(int index) {
         validateIndex(index);
         Task removed = tasks.remove(index);
         Storage.saveTasks(this);
-        UI.showMessage("Noted. I've removed this task:");
-        UI.showMessage(removed.toString());
-        UI.showMessage("Now you have " + size() + " tasks in the list.");
+        return UI.showMessage("Noted. I've removed this task:")
+                + UI.showMessage(removed.toString())
+                + UI.showMessage("Now you have " + size() + " tasks in the list.");
     }
 
-    public void printTasks() {
+    public String printTasks() {
         if (size() == 0) {
-            UI.showMessage("bara-bara thinks you should add some tasks before listing them...");
-            return;
+            return UI.showMessage("bara-bara thinks you should add some tasks before listing them...");
         }
+        StringBuilder sb = new StringBuilder();
         for (int i = 0; i < tasks.size(); i++) {
-            UI.showMessage((i + 1) + ". " + tasks.get(i).toString());
+            sb.append(UI.showMessage((i + 1) + ". " + tasks.get(i).toString()));
         }
+        return sb.toString();
     }
 
     private void validateIndex(int index) {

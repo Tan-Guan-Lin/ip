@@ -26,7 +26,7 @@ public class DeleteCommand extends Command {
      * @param taskList the task list from which the task will be deleted
      */
     @Override
-    public void execute(TaskList taskList) {
-        taskList.deleteTask(index);
+    public String execute(TaskList taskList) {
+        return taskList.deleteTask(index);
     }
 }

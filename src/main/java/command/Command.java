@@ -28,7 +28,7 @@ public abstract class Command {
      * @param taskList the task list to operate on
      * @throws Exception if execution fails
      */
-    public abstract void execute(TaskList taskList) throws Exception;
+    public abstract String execute(TaskList taskList) throws Exception;
 
     /**
      * Checks if this command is an exit command.

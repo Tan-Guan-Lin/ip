@@ -33,15 +33,16 @@ public class FindCommand extends Command {
      * @throws Exception if an error occurs during the search operation
      */
     @Override
-    public void execute(TaskList taskList) throws Exception {
+    public String execute(TaskList taskList) throws Exception {
         List<Task> searchResult = taskList.findTasks(search);
         if (searchResult.isEmpty()) {
-            UI.showMessage("No result found");
-            return;
+            return UI.showMessage("No result found");
         }
-        UI.showMessage("Here are the matching tasks in your list:");
+        StringBuilder ret = new StringBuilder();
+        ret.append(UI.showMessage("Here are the matching tasks in your list:"));
         for (Task task : searchResult) {
-            UI.showMessage(task.toString());
+            ret.append(UI.showMessage(task.toString()));
         }
+        return ret.toString();
     }
 }
