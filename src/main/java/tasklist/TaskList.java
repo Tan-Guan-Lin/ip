@@ -89,18 +89,21 @@ public class TaskList {
 
     public void markTask(int index) {
         validateIndex(index);
+        assert index < tasks.size() && index > 0 : "index out of range in TaskList";
         tasks.get(index).mark();
         Storage.saveTasks(this);
     }
 
     public void unmarkTask(int index) {
         validateIndex(index);
+        assert index < tasks.size() && index > 0 : "index out of range in TaskList";
         tasks.get(index).unMark();
         Storage.saveTasks(this);
     }
 
     public String deleteTask(int index) {
         validateIndex(index);
+        assert index < tasks.size() && index > 0 : "index out of range in TaskList";
         Task removed = tasks.remove(index);
         Storage.saveTasks(this);
         return UI.showMessage("Noted. I've removed this task:")

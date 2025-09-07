@@ -29,6 +29,7 @@ public class UnmarkCommand extends Command {
      */
     @Override
     public String execute(TaskList taskList) {
+        assert index < taskList.size() && index > 0 : "index out of range in Command";
         taskList.unmarkTask(index);
         return UI.showMessage("OK, I've marked this task as not done yet:")
                 + UI.showMessage(taskList.getAllTasks().get(index).toString());
