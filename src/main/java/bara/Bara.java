@@ -1,7 +1,5 @@
 package bara;
 
-import java.util.Scanner;
-
 import command.Command;
 import parser.Parser;
 import storage.Storage;

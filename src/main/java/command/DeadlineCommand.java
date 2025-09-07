@@ -10,19 +10,19 @@ import ui.UI;
  * Adds the deadline to the task list and displays confirmation.
  */
 public class DeadlineCommand extends Command {
-    private String description;
-    private String by;
+    private final String DESCRIPTION;
+    private final String BY;
 
     /**
-     * Constructs a DeadlineCommand with the given description and deadline.
+     * Constructs a DeadlineCommand with the given DESCRIPTION and deadline.
      *
      * @param description the description of the deadline task
-     * @param by          the deadline date/time string
+     * @param by the deadline of the deadline task
      */
     public DeadlineCommand(String description, String by) {
         super(CommandType.CREATE_DEADLINE);
-        this.description = description;
-        this.by = by;
+        this.DESCRIPTION = description;
+        this.BY = by;
     }
 
     /**
@@ -34,7 +34,7 @@ public class DeadlineCommand extends Command {
      */
     @Override
     public String execute(TaskList taskList) {
-        Task deadline = new Deadline(description, by);
+        Task deadline = new Deadline(DESCRIPTION, BY);
         taskList.addTask(deadline);
         return UI.showMessage("Got it. I've added this task:")
                 + UI.showMessage(deadline.toString())

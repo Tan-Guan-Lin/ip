@@ -3,8 +3,10 @@ package tasklist;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Scanner;
+import java.util.Set;
 
 import storage.Storage;
 import task.Deadline;
@@ -128,11 +130,15 @@ public class TaskList {
         }
     }
 
-    public List<Task> findTasks(String search) {
+    public List<Task> findTasks(String... searchTerms) {
         List<Task> searchResult = new ArrayList<>();
+        Set<Task> foundTask = new HashSet<>();
         for (Task task : tasks) {
-            if (task.getDescription().contains(search)) {
-                searchResult.add(task);
+            for(String searchTerm : searchTerms) {
+                if (task.getDescription().contains(searchTerm) && !foundTask.contains(task)) {
+                    searchResult.add(task);
+                    foundTask.add(task);
+                }
             }
         }
         return searchResult;

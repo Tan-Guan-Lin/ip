@@ -1,5 +1,7 @@
 package gui;
 
+import java.util.Objects;
+
 import bara.Bara;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -26,8 +28,8 @@ public class MainWindow extends AnchorPane {
 
     private Bara bara;
 
-    private Image userImage = new Image(this.getClass().getResourceAsStream("/images/user.gif"));
-    private Image baraImage = new Image(this.getClass().getResourceAsStream("/images/bara.gif"));
+    private final Image USER_IMAGE = new Image(Objects.requireNonNull(this.getClass().getResourceAsStream("/images/user.gif")));
+    private final Image BARA_IMAGE = new Image(Objects.requireNonNull(this.getClass().getResourceAsStream("/images/bara.gif")));
 
     @FXML
     public void initialize() {
@@ -43,7 +45,7 @@ public class MainWindow extends AnchorPane {
     public void greetUser() {
         String greetings = UI.greet();
         dialogContainer.getChildren().addAll(
-                DialogBox.getDukeDialog(greetings, baraImage)
+                DialogBox.getDukeDialog(greetings, BARA_IMAGE)
         );
     }
 
@@ -54,10 +56,10 @@ public class MainWindow extends AnchorPane {
     @FXML
     private void handleUserInput() {
         String input = userInput.getText();
-        String response = bara.run(input); // replace from whatever is outputted to System.out.println
+        String response = bara.run(input);
         dialogContainer.getChildren().addAll(
-                DialogBox.getUserDialog(input, userImage),
-                DialogBox.getDukeDialog(response, baraImage)
+                DialogBox.getUserDialog(input, USER_IMAGE),
+                DialogBox.getDukeDialog(response, BARA_IMAGE)
         );
         if(input.equals("bye")) {
             handleExit();

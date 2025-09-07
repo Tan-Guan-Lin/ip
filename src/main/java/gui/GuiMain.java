@@ -14,7 +14,7 @@ import javafx.stage.Stage;
  */
 public class GuiMain extends Application {
 
-    private Bara bara = new Bara();
+    private final Bara BARA = new Bara();
 
     @Override
     public void start(Stage stage) {
@@ -23,10 +23,10 @@ public class GuiMain extends Application {
             AnchorPane ap = fxmlLoader.load();
             Scene scene = new Scene(ap);
             stage.setScene(scene);
-            fxmlLoader.<MainWindow>getController().setBara(bara);  // inject the Duke instance
+            fxmlLoader.<MainWindow>getController().setBara(BARA);  // inject the Bara instance
             stage.show();
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
     }
 }

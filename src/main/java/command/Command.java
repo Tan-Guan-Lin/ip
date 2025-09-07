@@ -30,12 +30,4 @@ public abstract class Command {
      */
     public abstract String execute(TaskList taskList) throws Exception;
 
-    /**
-     * Checks if this command is an exit command.
-     *
-     * @return true if this is an exit command, false otherwise
-     */
-    public boolean isExit() {
-        return type == CommandType.BYE;
-    }
 }

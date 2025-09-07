@@ -1,5 +1,6 @@
 package parser;
 
+import java.util.Arrays;
 import java.util.regex.Pattern;
 
 import command.ByeCommand;
@@ -77,11 +78,11 @@ public class Parser {
                 return new DeleteCommand(deleteIndex);
 
             case "find":
-                StringBuilder searchTerm = new StringBuilder();
-                for (int i = 1; i < tokens.length; i++) {
-                    searchTerm.append(tokens[i]);
+                if (!checkCommandLongerThan(tokens, 2)) {
+                    return new InvalidCommand("bara-bara needs a keyword to find related tasks");
                 }
-                return new FindCommand(searchTerm.toString());
+                String[] searchTerms = Arrays.copyOfRange(tokens, 1, tokens.length);
+                return new FindCommand(searchTerms);
 
             default:
                 return new InvalidCommand("bara-bara cannot recognize this command -> please try again");
@@ -139,5 +140,9 @@ public class Parser {
             throw new IllegalArgumentException(":( events needs start and end dates\n"
                     + "correct usage: event <event_description> /from <start_date> /to <end_date>");
         }
+    }
+
+    private static boolean checkCommandLongerThan(String[] tokens, int n) {
+        return tokens.length >= n;
     }
 }
