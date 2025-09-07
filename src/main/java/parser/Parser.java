@@ -88,6 +88,7 @@ public class Parser {
 
     private static DeleteCommand parseDelete(String input, TaskList taskList, String[] tokens) {
         int deleteIndex = validateAndGetIndex(tokens, input, "delete", taskList.size());
+        assert taskList.size() >= 0 : "size of task list cannot be negative";
         return new DeleteCommand(deleteIndex);
     }
 
@@ -114,22 +115,27 @@ public class Parser {
 
     private static UnmarkCommand parseUnmark(String input, TaskList taskList, String[] tokens) {
         int unmarkIndex = validateAndGetIndex(tokens, input, "unmark", taskList.size());
+        assert taskList.size() >= 0 : "size of task list cannot be negative";
         return new UnmarkCommand(unmarkIndex);
     }
 
     private static MarkCommand parseMark(String input, TaskList taskList, String[] tokens) {
         int markIndex = validateAndGetIndex(tokens, input, "mark", taskList.size());
+        assert taskList.size() >= 0 : "size of task list cannot be negative";
         return new MarkCommand(markIndex);
     }
 
     private static ListCommand parseList(String[] tokens) {
         validateNoExtraArguments(tokens, "list");
+        assert input.equals("list") : "list command should just contain the word list";
         return new ListCommand();
     }
 
     private static ByeCommand parseBye(String[] tokens) {
         validateNoExtraArguments(tokens, "bye");
+        assert input.equals("bye") : "bye command should just contain the word bye";
         return new ByeCommand();
+
     }
 
     private static void validateNoExtraArguments(String[] tokens, String command) {
