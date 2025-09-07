@@ -27,6 +27,7 @@ public class DeleteCommand extends Command {
      */
     @Override
     public String execute(TaskList taskList) {
+        assert index < taskList.size() && index > 0 : "index out of range in execute";
         return taskList.deleteTask(index);
     }
 }

@@ -40,19 +40,23 @@ public class Parser {
         try {
             switch (tokens[0]) {
             case "bye":
-                validateNoExtraArguments(tokens, "bye");
+                validateBye(input, "bye");
+                assert input.equals("bye") : "bye command should just contain the word bye";
                 return new ByeCommand();
 
             case "list":
                 validateNoExtraArguments(tokens, "list");
+                assert input.equals("list") : "list command should just contain the word list";
                 return new ListCommand();
 
             case "mark":
                 int markIndex = validateAndGetIndex(tokens, input, "mark", taskList.size());
+                assert taskList.size() >= 0 : "size of task list cannot be negative";
                 return new MarkCommand(markIndex);
 
             case "unmark":
                 int unmarkIndex = validateAndGetIndex(tokens, input, "unmark", taskList.size());
+                assert taskList.size() >= 0 : "size of task list cannot be negative";
                 return new UnmarkCommand(unmarkIndex);
 
             case "todo":
@@ -89,6 +93,16 @@ public class Parser {
             }
         } catch (IllegalArgumentException | IndexOutOfBoundsException e) {
             return new InvalidCommand(e.getMessage());
+        }
+    }
+
+
+    private static void validateBye(String input, String command) {
+        if(!input.equals(command)) {
+            throw new IllegalArgumentException("Please do not add anything behind "
+                    + command
+                    + " command\ncorrect usage: "
+                    + command);
         }
     }
 

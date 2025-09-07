@@ -29,6 +29,7 @@ public class MarkCommand extends Command {
      */
     @Override
     public String execute(TaskList taskList) {
+        assert index < taskList.size() && index > 0 : "index out of range in Command";
         taskList.markTask(index);
         return UI.showMessage("Nice! I've marked this task as done:")
                 + UI.showMessage(taskList.getAllTasks().get(index).toString());
