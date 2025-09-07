@@ -21,6 +21,23 @@ import tasklist.TaskList;
  * Handles validation and conversion of user commands.
  */
 public class Parser {
+    // Regex patterns for command validation
+    private static final String TODO_PATTERN = "todo\\s.*";
+    private static final String DEADLINE_PATTERN = "deadline\\s.*\\s/by\\s.*";
+    private static final String EVENT_PATTERN = "event\\s.*\\s/from\\s.*\\s/to\\s.*";
+    private static final String INDEX_COMMAND_PATTERN = "%s\\s\\d+";
+
+    // Error messages
+    private static final String EMPTY_COMMAND_MSG = "Empty command";
+    private static final String UNRECOGNIZED_COMMAND_MSG = "bara-bara cannot recognize this command -> please try again";
+    private static final String FIND_KEYWORD_MSG = "bara-bara needs a keyword to find related tasks";
+    private static final String TODO_DESCRIPTION_MSG = "todo tasks need a description :O\ncorrect usage: todo <task_description>";
+    private static final String DEADLINE_REQUIRED_MSG = ":( deadline tasks need deadlines\ncorrect usage: deadline <task_description> /by <task_deadline>";
+    private static final String EVENT_DATES_MSG = ":( events needs start and end dates\ncorrect usage: event <event_description> /from <start_date> /to <end_date>";
+
+    private static final String EXTRA_ARGS_MSG = "Please do not add anything behind %s command\ncorrect usage: %s";
+    private static final String INDEX_REQUIRED_MSG = "%s requires an integer argument!\ncorrect usage: %s <task_number>\nwhere task_number is the number in front of the task after the list command";
+    private static final String INDEX_OUT_OF_BOUNDS_MSG = "bara-bara can't find this task in the list :(\nrange: %d - %d";
 
     /**
      * Parses the user input string and returns the corresponding Command object.
@@ -34,125 +51,128 @@ public class Parser {
         String[] tokens = input.split("\\s");
 
         if (tokens.length == 0) {
-            return new InvalidCommand("Empty command");
+            return new InvalidCommand(EMPTY_COMMAND_MSG);
         }
 
+        String commandWord = tokens[0];
+
         try {
-            switch (tokens[0]) {
-            case "bye":
-                validateBye(input, "bye");
-                assert input.equals("bye") : "bye command should just contain the word bye";
-                return new ByeCommand();
-
-            case "list":
-                validateNoExtraArguments(tokens, "list");
-                assert input.equals("list") : "list command should just contain the word list";
-                return new ListCommand();
-
-            case "mark":
-                int markIndex = validateAndGetIndex(tokens, input, "mark", taskList.size());
-                assert taskList.size() >= 0 : "size of task list cannot be negative";
-                return new MarkCommand(markIndex);
-
-            case "unmark":
-                int unmarkIndex = validateAndGetIndex(tokens, input, "unmark", taskList.size());
-                assert taskList.size() >= 0 : "size of task list cannot be negative";
-                return new UnmarkCommand(unmarkIndex);
-
-            case "todo":
-                validateTodo(input);
-                String todoDesc = input.replaceFirst("todo\\s", "");
-                return new TodoCommand(todoDesc);
-
-            case "deadline":
-                validateDeadline(input);
-                String deadlineInput = input.replaceFirst("deadline\\s", "");
-                String[] deadlineParts = deadlineInput.split("\\s/by\\s");
-                return new DeadlineCommand(deadlineParts[0], deadlineParts[1]);
-
-            case "event":
-                validateEvent(input);
-                String eventInput = input.replaceFirst("event\\s", "");
-                String[] eventParts = eventInput.split("\\s/from\\s");
-                String[] dates = eventParts[1].split("\\s/to\\s");
-                return new EventCommand(eventParts[0], dates[0], dates[1]);
-
-            case "delete":
-                int deleteIndex = validateAndGetIndex(tokens, input, "delete", taskList.size());
-                return new DeleteCommand(deleteIndex);
-
-            case "find":
-                if (!checkCommandLongerThan(tokens, 2)) {
-                    return new InvalidCommand("bara-bara needs a keyword to find related tasks");
-                }
-                String[] searchTerms = Arrays.copyOfRange(tokens, 1, tokens.length);
-                return new FindCommand(searchTerms);
-
-            default:
-                return new InvalidCommand("bara-bara cannot recognize this command -> please try again");
-            }
+            return switch (commandWord) {
+                case "bye" -> parseBye(tokens);
+                case "list" -> parseList(tokens);
+                case "mark" -> parseMark(input, taskList, tokens);
+                case "unmark" -> parseUnmark(input, taskList, tokens);
+                case "todo" -> parseTodo(input);
+                case "deadline" -> parseDeadline(input);
+                case "event" -> parseEvent(input);
+                case "delete" -> parseDelete(input, taskList, tokens);
+                case "find" -> parseFind(tokens);
+                default -> parseInvalid();
+            };
         } catch (IllegalArgumentException | IndexOutOfBoundsException e) {
             return new InvalidCommand(e.getMessage());
         }
     }
 
+    private static InvalidCommand parseInvalid() {
+        return new InvalidCommand(UNRECOGNIZED_COMMAND_MSG);
+    }
 
-    private static void validateBye(String input, String command) {
-        if(!input.equals(command)) {
-            throw new IllegalArgumentException("Please do not add anything behind "
-                    + command
-                    + " command\ncorrect usage: "
-                    + command);
+    private static Command parseFind(String[] tokens) {
+        if (!checkCommandLongerThan(tokens, 2)) {
+            return new InvalidCommand(FIND_KEYWORD_MSG);
         }
+        String[] searchTerms = Arrays.copyOfRange(tokens, 1, tokens.length);
+        return new FindCommand(searchTerms);
+    }
+
+    private static DeleteCommand parseDelete(String input, TaskList taskList, String[] tokens) {
+        int deleteIndex = validateAndGetIndex(tokens, input, "delete", taskList.size());
+        assert taskList.size() >= 0 : "size of task list cannot be negative";
+        return new DeleteCommand(deleteIndex);
+    }
+
+    private static EventCommand parseEvent(String input) {
+        validateEvent(input);
+        String eventInput = input.replaceFirst("event\\s", "");
+        String[] eventParts = eventInput.split("\\s/from\\s");
+        String[] dates = eventParts[1].split("\\s/to\\s");
+        return new EventCommand(eventParts[0], dates[0], dates[1]);
+    }
+
+    private static DeadlineCommand parseDeadline(String input) {
+        validateDeadline(input);
+        String deadlineInput = input.replaceFirst("deadline\\s", "");
+        String[] deadlineParts = deadlineInput.split("\\s/by\\s");
+        return new DeadlineCommand(deadlineParts[0], deadlineParts[1]);
+    }
+
+    private static TodoCommand parseTodo(String input) {
+        validateTodo(input);
+        String todoDesc = input.replaceFirst("todo\\s", "");
+        return new TodoCommand(todoDesc);
+    }
+
+    private static UnmarkCommand parseUnmark(String input, TaskList taskList, String[] tokens) {
+        int unmarkIndex = validateAndGetIndex(tokens, input, "unmark", taskList.size());
+        assert taskList.size() >= 0 : "size of task list cannot be negative";
+        return new UnmarkCommand(unmarkIndex);
+    }
+
+    private static MarkCommand parseMark(String input, TaskList taskList, String[] tokens) {
+        int markIndex = validateAndGetIndex(tokens, input, "mark", taskList.size());
+        assert taskList.size() >= 0 : "size of task list cannot be negative";
+        return new MarkCommand(markIndex);
+    }
+
+    private static ListCommand parseList(String[] tokens) {
+        validateNoExtraArguments(tokens, "list");
+        assert input.equals("list") : "list command should just contain the word list";
+        return new ListCommand();
+    }
+
+    private static ByeCommand parseBye(String[] tokens) {
+        validateNoExtraArguments(tokens, "bye");
+        assert input.equals("bye") : "bye command should just contain the word bye";
+        return new ByeCommand();
+
     }
 
     private static void validateNoExtraArguments(String[] tokens, String command) {
         if (tokens.length != 1) {
-            throw new IllegalArgumentException("Please do not add anything behind "
-                    + command
-                    + " command\ncorrect usage: "
-                    + command);
+            throw new IllegalArgumentException(String.format(EXTRA_ARGS_MSG, command, command));
         }
     }
 
     private static int validateAndGetIndex(String[] tokens, String input, String command, int size) {
-        if (tokens.length != 2 || !Pattern.matches(command + "\\s\\d+", input)) {
-            throw new IllegalArgumentException(command
-                    + " requires an integer argument!\n"
-                    + "correct usage: "
-                    + command
-                    + " <task_number>\n"
-                    + "where task_number is the number in front of the task after the list command");
+        String pattern = String.format(INDEX_COMMAND_PATTERN, command);
+        if (tokens.length != 2 || !Pattern.matches(pattern, input)) {
+            throw new IllegalArgumentException(String.format(INDEX_REQUIRED_MSG, command, command));
         }
 
         int index = Integer.parseInt(tokens[1]) - 1;
         if (index < 0 || index >= size) {
-            throw new IndexOutOfBoundsException(
-                    String.format("bara-bara can't find this task in the list :(\nrange: %d - %d",
-                            1, size));
+            throw new IndexOutOfBoundsException(String.format(INDEX_OUT_OF_BOUNDS_MSG, 1, size));
         }
 
         return index;
     }
 
     private static void validateTodo(String input) {
-        if (!Pattern.matches("todo\\s.*", input)) {
-            throw new IllegalArgumentException("todo tasks need a description :O\n"
-                    + "correct usage: todo <task_description>");
+        if (!Pattern.matches(TODO_PATTERN, input)) {
+            throw new IllegalArgumentException(TODO_DESCRIPTION_MSG);
         }
     }
 
     private static void validateDeadline(String input) {
-        if (!Pattern.matches("deadline\\s.*\\s/by\\s.*", input)) {
-            throw new IllegalArgumentException(":( deadline tasks need deadlines\n"
-                    + "correct usage: deadline <task_description> /by <task_deadline>");
+        if (!Pattern.matches(DEADLINE_PATTERN, input)) {
+            throw new IllegalArgumentException(DEADLINE_REQUIRED_MSG);
         }
     }
 
     private static void validateEvent(String input) {
-        if (!Pattern.matches("event\\s.*\\s/from\\s.*\\s/to\\s.*", input)) {
-            throw new IllegalArgumentException(":( events needs start and end dates\n"
-                    + "correct usage: event <event_description> /from <start_date> /to <end_date>");
+        if (!Pattern.matches(EVENT_PATTERN, input)) {
+            throw new IllegalArgumentException(EVENT_DATES_MSG);
         }
     }
 

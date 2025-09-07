@@ -33,7 +33,7 @@ public class Storage {
                 Files.createFile(path);
             }
         } catch (IOException e) {
-            UI.showMessage(e.getMessage());
+            System.err.println(e.getMessage());
         }
     }
 
@@ -51,7 +51,7 @@ public class Storage {
         try {
             Files.writeString(path, data, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
         } catch (IOException e) {
-            UI.showMessage(e.getMessage());
+            System.err.println(e.getMessage());
         }
     }
 
