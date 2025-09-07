@@ -18,6 +18,15 @@ import ui.UI;
 public class TaskList {
     protected ArrayList<Task> tasks;
 
+    private static final String TASK_TYPE_TODO = "T";
+    private static final String TASK_TYPE_DEADLINE = "D";
+    private static final String TASK_TYPE_EVENT = "E";
+    private static final String MARKED = "1";
+    private static final String UNMARKED = "0";
+    private static final int TODO_DATA_LENGTH = 3;
+    private static final int DEADLINE_DATA_LENGTH = 4;
+    private static final int EVENT_DATA_LENGTH = 5;
+
     public TaskList() {
         this.tasks = new ArrayList<>();
     }
@@ -31,51 +40,53 @@ public class TaskList {
                 String[] taskData = curr.split("\\s\\|\\s");
 
                 try {
-                    if (!taskData[1].equals("1") && !taskData[1].equals("0")) {
-                        throw new IllegalArgumentException("Invalid mark status");
-                    }
-
-                    boolean isDone = Integer.parseInt(taskData[1]) == 1;
-                    String description = taskData[2];
-
-                    switch (taskData[0]) {
-                    case "T":
-                        if (taskData.length != 3) {
-                            throw new IllegalArgumentException("Format error");
-                        }
-                        tasks.add(new Todo(description, isDone));
-                        break;
-                    case "D":
-                        if (taskData.length != 4) {
-                            throw new IllegalArgumentException("Format error");
-                        }
-                        String by = taskData[3].replace('T', ' ');
-                        tasks.add(new Deadline(description, isDone, by));
-                        break;
-                    case "E":
-                        if (taskData.length != 5) {
-                            throw new IllegalArgumentException("Format error");
-                        }
-                        String from = taskData[3].replace('T', ' ');
-                        String to = taskData[4].replace('T', ' ');
-                        tasks.add(new Event(description, isDone, from, to));
-                        break;
-                    default:
-                        throw new IllegalArgumentException("task.Task type invalid");
-                    }
+                    loadTask(taskData);
                 } catch (IllegalArgumentException e) {
-                    UI.showMessage("Corrupted file: " + e.getMessage());
-                    UI.printLine();
+                    System.err.println("Corrupted file: " + e.getMessage());
                 }
             }
         } catch (FileNotFoundException e) {
-            UI.showMessage(e.getMessage());
-            UI.printLine();
+            System.err.println(e.getMessage());
         }
     }
 
-    public ArrayList<Task> getAllTasks() {
-        return tasks;
+    private void loadTask(String[] taskData) {
+        if (!taskData[1].equals(MARKED) && !taskData[1].equals(UNMARKED)) {
+            throw new IllegalArgumentException("Invalid mark status");
+        }
+
+        boolean isDone = taskData[1].equals(MARKED);
+        String description = taskData[2];
+
+        switch (taskData[0]) {
+        case TASK_TYPE_TODO:
+            if (taskData.length != TODO_DATA_LENGTH) {
+                throw new IllegalArgumentException("Format error");
+            }
+            tasks.add(new Todo(description, isDone));
+            break;
+        case TASK_TYPE_DEADLINE:
+            if (taskData.length != DEADLINE_DATA_LENGTH) {
+                throw new IllegalArgumentException("Format error");
+            }
+            String by = taskData[3].replace('T', ' ');
+            tasks.add(new Deadline(description, isDone, by));
+            break;
+        case TASK_TYPE_EVENT:
+            if (taskData.length != EVENT_DATA_LENGTH) {
+                throw new IllegalArgumentException("Format error");
+            }
+            String from = taskData[3].replace('T', ' ');
+            String to = taskData[4].replace('T', ' ');
+            tasks.add(new Event(description, isDone, from, to));
+            break;
+        default:
+            throw new IllegalArgumentException("task.Task type invalid");
+        }
+    }
+
+    public List<Task> getAllTasks() {
+        return new ArrayList<>(tasks);
     }
 
     public int size() {
