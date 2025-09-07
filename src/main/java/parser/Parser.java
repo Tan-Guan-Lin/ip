@@ -127,13 +127,11 @@ public class Parser {
 
     private static ListCommand parseList(String[] tokens) {
         validateNoExtraArguments(tokens, "list");
-        assert input.equals("list") : "list command should just contain the word list";
         return new ListCommand();
     }
 
     private static ByeCommand parseBye(String[] tokens) {
         validateNoExtraArguments(tokens, "bye");
-        assert input.equals("bye") : "bye command should just contain the word bye";
         return new ByeCommand();
 
     }
