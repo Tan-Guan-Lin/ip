@@ -53,5 +53,10 @@ public enum CommandType {
     /**
      * Command to find a task with a certain String within its description
      */
-    FIND
+    FIND,
+
+    /**
+     * Command to tag a task
+     */
+    TAG
 }

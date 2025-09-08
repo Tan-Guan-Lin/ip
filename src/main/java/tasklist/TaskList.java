@@ -153,4 +153,10 @@ public class TaskList {
                 .distinct()
                 .toList();
     }
+
+    public String tagTask(List<String> tags, int index) {
+        tasks.get(index).addTags(tags);
+        return UI.showMessage("Noted. I've tagged this task:")
+                + UI.showMessage(tasks.get(index).toString());
+    }
 }
