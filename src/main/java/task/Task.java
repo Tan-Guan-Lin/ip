@@ -15,10 +15,10 @@ public class Task {
         tags = new ArrayList<>();
     }
 
-    public Task(String description, boolean isDone) {
+    public Task(String description, boolean isDone, List<String> tags) {
         this.description = description;
         this.isDone = isDone;
-        tags = new ArrayList<>();
+        this.tags = tags;
     }
 
     public String getStatusIcon() {

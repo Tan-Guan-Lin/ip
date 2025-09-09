@@ -1,12 +1,14 @@
 package task;
 
+import java.util.List;
+
 public class Todo extends Task {
     public Todo(String description) {
         super(description);
     }
 
-    public Todo(String description, boolean isDone) {
-        super(description, isDone);
+    public Todo(String description, boolean isDone, List<String> tags) {
+        super(description, isDone, tags);
     }
 
 
@@ -17,6 +19,12 @@ public class Todo extends Task {
 
     @Override
     public String store() {
-        return "T" + " | " + (this.isDone ? 1 : 0) + " | " + this.description + "\n";
+
+        StringBuilder sb = new StringBuilder("T" + " | " + (this.isDone ? 1 : 0) + " | " + this.description + " | ");
+        for(String tag : tags) {
+            sb.append(tag + " / ");
+        }
+        return sb.append("\n").toString();
+
     }
 }
