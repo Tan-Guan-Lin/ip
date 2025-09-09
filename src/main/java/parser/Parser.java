@@ -1,6 +1,7 @@
 package parser;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.regex.Pattern;
 
 import command.ByeCommand;
@@ -12,6 +13,7 @@ import command.FindCommand;
 import command.InvalidCommand;
 import command.ListCommand;
 import command.MarkCommand;
+import command.TagCommand;
 import command.TodoCommand;
 import command.UnmarkCommand;
 import tasklist.TaskList;
@@ -26,7 +28,7 @@ public class Parser {
     private static final String DEADLINE_PATTERN = "deadline\\s.*\\s/by\\s.*";
     private static final String EVENT_PATTERN = "event\\s.*\\s/from\\s.*\\s/to\\s.*";
     private static final String INDEX_COMMAND_PATTERN = "%s\\s\\d+";
-
+    private static final String TAG_PATTERN = "^#.*";
     // Error messages
     private static final String EMPTY_COMMAND_MSG = "Empty command";
     private static final String UNRECOGNIZED_COMMAND_MSG = "bara-bara cannot recognize this command -> please try again";
@@ -38,6 +40,7 @@ public class Parser {
     private static final String EXTRA_ARGS_MSG = "Please do not add anything behind %s command\ncorrect usage: %s";
     private static final String INDEX_REQUIRED_MSG = "%s requires an integer argument!\ncorrect usage: %s <task_number>\nwhere task_number is the number in front of the task after the list command";
     private static final String INDEX_OUT_OF_BOUNDS_MSG = "bara-bara can't find this task in the list :(\nrange: %d - %d";
+    public static final String TAG_ERROR_MSG = "tag command format is wrong \nCorrect usage: tag <task_index> <#tag1> <#tag2> ...";
 
     /**
      * Parses the user input string and returns the corresponding Command object.
@@ -67,11 +70,20 @@ public class Parser {
                 case "event" -> parseEvent(input);
                 case "delete" -> parseDelete(input, taskList, tokens);
                 case "find" -> parseFind(tokens);
+                case "tag" -> parseTag(tokens, taskList);
                 default -> parseInvalid();
             };
         } catch (IllegalArgumentException | IndexOutOfBoundsException e) {
             return new InvalidCommand(e.getMessage());
         }
+    }
+
+    private static Command parseTag(String[] tokens, TaskList taskList) {
+        int index = validateTagAndGetIndex(taskList.size(), tokens);
+        String[] tagsArr = Arrays.copyOfRange(tokens, 2, tokens.length);
+        List<String> tags = Arrays.stream(tagsArr).toList();
+        return new TagCommand(index, tags);
+
     }
 
     private static InvalidCommand parseInvalid() {
@@ -154,6 +166,24 @@ public class Parser {
         }
 
         return index;
+    }
+
+    private static int validateTagAndGetIndex(int size, String... tokens) {
+        if(tokens.length < 3) {
+            throw new IllegalArgumentException(TAG_ERROR_MSG);
+        }
+        int index = Integer.parseInt(tokens[1]) - 1;
+        for (int i = 2; i < tokens.length; i++) {
+            String potentialTag = tokens[i];
+            if (!Pattern.matches(TAG_PATTERN, potentialTag)) {
+                throw new IllegalArgumentException(TAG_ERROR_MSG);
+            }
+        }
+        if (index < 0 || index >= size) {
+            throw new IndexOutOfBoundsException(String.format(INDEX_OUT_OF_BOUNDS_MSG, 1, size));
+        }
+        return index;
+
     }
 
     private static void validateTodo(String input) {

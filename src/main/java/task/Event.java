@@ -2,6 +2,7 @@ package task;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
+import java.util.List;
 
 import parser.DateTimeParser;
 
@@ -15,8 +16,8 @@ public class Event extends Task {
         this.to = parseDateTimeWithHandling(to);
     }
 
-    public Event(String description, boolean isDone, String from, String to) {
-        super(description, isDone);
+    public Event(String description, boolean isDone, List<String> tags, String from, String to) {
+        super(description, isDone, tags);
         this.from = parseDateTimeWithHandling(from);
         this.to = parseDateTimeWithHandling(to);
     }
@@ -42,6 +43,11 @@ public class Event extends Task {
 
     @Override
     public String store() {
-        return "E | " + (isDone ? 1 : 0) + " | " + description + " | " + from + " | " + to + "\n";
+        StringBuilder sb = new StringBuilder("E | " + (isDone ? 1 : 0) + " | " + description + " | " + from
+                + " | " + to + " | ");
+        for(String tag : tags) {
+            sb.append(tag + " / ");
+        }
+        return sb.append("\n").toString();
     }
 }

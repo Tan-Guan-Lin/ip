@@ -2,6 +2,7 @@ package task;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
+import java.util.List;
 
 import parser.DateTimeParser;
 
@@ -14,8 +15,8 @@ public class Deadline extends Task {
         this.by = parseDateTimeWithHandling(by);
     }
 
-    public Deadline(String description, boolean isDone, String by) {
-        super(description, isDone);
+    public Deadline(String description, boolean isDone, List<String> tags, String by) {
+        super(description, isDone, tags);
         this.by = parseDateTimeWithHandling(by);
     }
 
@@ -34,6 +35,10 @@ public class Deadline extends Task {
 
     @Override
     public String store() {
-        return "D | " + (isDone ? 1 : 0) + " | " + description + " | " + by + "\n";
+        StringBuilder sb = new StringBuilder("D | " + (isDone ? 1 : 0) + " | " + description + " | " + by + " | ");
+        for(String tag : tags) {
+            sb.append(tag + " / ");
+        }
+        return sb.append("\n").toString();
     }
 }

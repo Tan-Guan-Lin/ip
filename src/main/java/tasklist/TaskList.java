@@ -4,11 +4,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Scanner;
-import java.util.Set;
-import java.util.stream.Stream;
 
 import storage.Storage;
 import task.Deadline;
@@ -25,9 +22,9 @@ public class TaskList {
     private static final String TASK_TYPE_EVENT = "E";
     private static final String MARKED = "1";
     private static final String UNMARKED = "0";
-    private static final int TODO_DATA_LENGTH = 3;
-    private static final int DEADLINE_DATA_LENGTH = 4;
-    private static final int EVENT_DATA_LENGTH = 5;
+    private static final int TODO_DATA_LENGTH = 4;
+    private static final int DEADLINE_DATA_LENGTH = 5;
+    private static final int EVENT_DATA_LENGTH = 6;
 
     public TaskList() {
         this.tasks = new ArrayList<>();
@@ -65,14 +62,15 @@ public class TaskList {
             if (taskData.length != TODO_DATA_LENGTH) {
                 throw new IllegalArgumentException("Format error");
             }
-            tasks.add(new Todo(description, isDone));
+
+            tasks.add(new Todo(description, isDone, tagsToList(taskData[3])));
             break;
         case TASK_TYPE_DEADLINE:
             if (taskData.length != DEADLINE_DATA_LENGTH) {
                 throw new IllegalArgumentException("Format error");
             }
             String by = taskData[3].replace('T', ' ');
-            tasks.add(new Deadline(description, isDone, by));
+            tasks.add(new Deadline(description, isDone, tagsToList(taskData[4]), by));
             break;
         case TASK_TYPE_EVENT:
             if (taskData.length != EVENT_DATA_LENGTH) {
@@ -80,11 +78,16 @@ public class TaskList {
             }
             String from = taskData[3].replace('T', ' ');
             String to = taskData[4].replace('T', ' ');
-            tasks.add(new Event(description, isDone, from, to));
+            tasks.add(new Event(description, isDone, tagsToList(taskData[5]), from, to));
             break;
         default:
             throw new IllegalArgumentException("task.Task type invalid");
         }
+    }
+
+    private static List<String> tagsToList(String tagString) {
+        String[] tags = tagString.split(" / ");
+        return Arrays.stream(tags).toList();
     }
 
     public List<Task> getAllTasks() {
@@ -152,5 +155,13 @@ public class TaskList {
                         .anyMatch(searchTerm -> task.getDescription().contains(searchTerm)))
                 .distinct()
                 .toList();
+    }
+
+    public String tagTask(List<String> tags, int index) {
+        tasks.get(index).addTags(tags);
+        Storage.saveTasks(this);
+        return UI.showMessage("Noted. I've tagged this task:")
+                + UI.showMessage(tasks.get(index).toString());
+
     }
 }
