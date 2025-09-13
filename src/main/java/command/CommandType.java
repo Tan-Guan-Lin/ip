@@ -58,5 +58,10 @@ public enum CommandType {
     /**
      * Command to tag a task
      */
-    TAG
+    TAG,
+
+    /**
+     * Command to remove a tag
+     */
+    DTAG
 }

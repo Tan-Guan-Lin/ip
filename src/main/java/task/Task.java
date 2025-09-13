@@ -36,7 +36,7 @@ public class Task {
     public String toString() {
         StringBuilder desc = new StringBuilder(String.format("[%s] %s ", getStatusIcon(), description));
         for(String tag : tags) {
-            desc.append(String.format(tag) + " ");
+            desc.append(String.format(tag)).append(" ");
         }
         return desc.toString();
     }
@@ -52,4 +52,21 @@ public class Task {
     public void addTags(List<String> tags) {
         this.tags = Stream.concat(this.tags.stream(), tags.stream()).toList();
     }
+
+    public boolean removeTags(List<String> tagsToRemove) {
+        if (tags == null || tagsToRemove == null || tagsToRemove.isEmpty()) {
+            return false;
+        }
+
+        int originalSize = tags.size();
+
+        List<String> filteredTags = tags.stream()
+                .filter(tag -> !tagsToRemove.contains(tag))
+                .toList();
+
+        boolean removed = filteredTags.size() < originalSize;
+
+        tags = filteredTags;
+
+        return removed;}
 }

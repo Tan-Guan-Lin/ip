@@ -22,9 +22,9 @@ public class TaskList {
     private static final String TASK_TYPE_EVENT = "E";
     private static final String MARKED = "1";
     private static final String UNMARKED = "0";
-    private static final int TODO_DATA_LENGTH = 4;
-    private static final int DEADLINE_DATA_LENGTH = 5;
-    private static final int EVENT_DATA_LENGTH = 6;
+    private static final int TODO_DATA_LENGTH = 3;
+    private static final int DEADLINE_DATA_LENGTH = 4;
+    private static final int EVENT_DATA_LENGTH = 5;
 
     public TaskList() {
         this.tasks = new ArrayList<>();
@@ -50,8 +50,13 @@ public class TaskList {
     }
 
     private void loadTask(String[] taskData) {
+        // Validate minimum length first
+        if (taskData.length < 2) {  // At least type and status
+            throw new IllegalArgumentException("Insufficient data fields: " + Arrays.toString(taskData));
+        }
+
         if (!taskData[1].equals(MARKED) && !taskData[1].equals(UNMARKED)) {
-            throw new IllegalArgumentException("Invalid mark status");
+            throw new IllegalArgumentException("Invalid mark status: " + taskData[1]);
         }
 
         boolean isDone = taskData[1].equals(MARKED);
@@ -59,37 +64,58 @@ public class TaskList {
 
         switch (taskData[0]) {
         case TASK_TYPE_TODO:
-            if (taskData.length != TODO_DATA_LENGTH) {
-                throw new IllegalArgumentException("Format error");
-            }
-
-            tasks.add(new Todo(description, isDone, tagsToList(taskData[3])));
+            String todoTags = taskData.length > 3 ? taskData[3] : "";
+            tasks.add(new Todo(description, isDone, tagsToList(todoTags)));
             break;
+
         case TASK_TYPE_DEADLINE:
-            if (taskData.length != DEADLINE_DATA_LENGTH) {
-                throw new IllegalArgumentException("Format error");
+            if (taskData.length < DEADLINE_DATA_LENGTH) {
+                throw new IllegalArgumentException("Deadline format error - expected at least " + DEADLINE_DATA_LENGTH + " fields, got " + taskData.length);
             }
             String by = taskData[3].replace('T', ' ');
-            tasks.add(new Deadline(description, isDone, tagsToList(taskData[4]), by));
+            String deadlineTags = taskData.length > 4 ? taskData[4] : "";
+            tasks.add(new Deadline(description, isDone, tagsToList(deadlineTags), by));
             break;
+
         case TASK_TYPE_EVENT:
-            if (taskData.length != EVENT_DATA_LENGTH) {
-                throw new IllegalArgumentException("Format error");
+            if (taskData.length < EVENT_DATA_LENGTH) {
+                throw new IllegalArgumentException("Event format error - expected at least " + EVENT_DATA_LENGTH + " fields, got " + taskData.length);
             }
             String from = taskData[3].replace('T', ' ');
             String to = taskData[4].replace('T', ' ');
-            tasks.add(new Event(description, isDone, tagsToList(taskData[5]), from, to));
+            String eventTags = taskData.length > 5 ? taskData[5] : "";
+            tasks.add(new Event(description, isDone, tagsToList(eventTags), from, to));
             break;
+
         default:
-            throw new IllegalArgumentException("task.Task type invalid");
+            throw new IllegalArgumentException("Task type invalid: " + taskData[0]);
+        }
+    }
+
+    public String deleteTag(int index, List<String> tagsToRemove) {
+        validateIndex(index);
+        Task task = tasks.get(index);
+
+        boolean removed = task.removeTags(tagsToRemove);
+
+        if (removed) {
+            Storage.saveTasks(this);
+            return UI.showMessage("Noted. I've removed tags from this task:")
+                    + UI.showMessage(task.toString());
+        } else {
+            return UI.showMessage("No matching tags found to remove from this task:");
         }
     }
 
     private static List<String> tagsToList(String tagString) {
+        if (tagString == null || tagString.trim().isEmpty()) {
+            return new ArrayList<>();
+        }
         String[] tags = tagString.split(" / ");
-        return Arrays.stream(tags).toList();
+        return Arrays.stream(tags)
+                .filter(tag -> !tag.trim().isEmpty())
+                .toList();
     }
-
     public List<Task> getAllTasks() {
         return new ArrayList<>(tasks);
     }

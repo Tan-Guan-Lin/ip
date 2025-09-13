@@ -1,5 +1,6 @@
 package parser;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Pattern;
@@ -8,6 +9,7 @@ import command.ByeCommand;
 import command.Command;
 import command.DeadlineCommand;
 import command.DeleteCommand;
+import command.DeleteTagCommand;
 import command.EventCommand;
 import command.FindCommand;
 import command.InvalidCommand;
@@ -36,11 +38,11 @@ public class Parser {
     private static final String TODO_DESCRIPTION_MSG = "todo tasks need a description :O\ncorrect usage: todo <task_description>";
     private static final String DEADLINE_REQUIRED_MSG = ":( deadline tasks need deadlines\ncorrect usage: deadline <task_description> /by <task_deadline>";
     private static final String EVENT_DATES_MSG = ":( events needs start and end dates\ncorrect usage: event <event_description> /from <start_date> /to <end_date>";
-
     private static final String EXTRA_ARGS_MSG = "Please do not add anything behind %s command\ncorrect usage: %s";
     private static final String INDEX_REQUIRED_MSG = "%s requires an integer argument!\ncorrect usage: %s <task_number>\nwhere task_number is the number in front of the task after the list command";
     private static final String INDEX_OUT_OF_BOUNDS_MSG = "bara-bara can't find this task in the list :(\nrange: %d - %d";
     public static final String TAG_ERROR_MSG = "tag command format is wrong \nCorrect usage: tag <task_index> <#tag1> <#tag2> ...";
+    private static final String DTAG_ERROR_MSG = "dtag command format is wrong \nCorrect usage: dtag <task_index> <#tag1> <#tag2> ...";
 
     /**
      * Parses the user input string and returns the corresponding Command object.
@@ -71,11 +73,37 @@ public class Parser {
                 case "delete" -> parseDelete(input, taskList, tokens);
                 case "find" -> parseFind(tokens);
                 case "tag" -> parseTag(tokens, taskList);
+                case "dtag" -> parseDTag(tokens, taskList);
                 default -> parseInvalid();
             };
         } catch (IllegalArgumentException | IndexOutOfBoundsException e) {
             return new InvalidCommand(e.getMessage());
         }
+    }
+
+    /**
+     * Parses the 'dtag' command to remove tags from a specific task.
+     * Validates the command format, extracts the task index and tags to remove,
+     * and returns a DeleteTagCommand object.
+     *
+     * @param tokens the tokenized user input command
+     * @param taskList the current task list used for index validation
+     * @return a DeleteTagCommand object for execution
+     * @throws IllegalArgumentException if the command format is invalid
+     * @throws IndexOutOfBoundsException if the task index is out of bounds
+     * <p>
+     * AI-Assisted Development: This method was refined with Deepseek assistance
+     * to handle immutable list conversion issues. The AI suggested using
+     * `new ArrayList<>(Arrays.asList(tagsArr))` instead of `Arrays.stream(tagsArr).toList()`
+     * to avoid UnsupportedOperationException when modifying tags later in the execution flow.
+     * This ensures the tags list remains mutable throughout the command processing.
+     */
+
+    private static Command parseDTag(String[] tokens, TaskList taskList) {
+        int index = validateTagAndGetIndex(taskList.size(), tokens);
+        String[] tagsArr = Arrays.copyOfRange(tokens, 2, tokens.length);
+        List<String> tags = new ArrayList<>(Arrays.asList(tagsArr));
+        return new DeleteTagCommand(index, tags);
     }
 
     private static Command parseTag(String[] tokens, TaskList taskList) {
@@ -170,13 +198,15 @@ public class Parser {
 
     private static int validateTagAndGetIndex(int size, String... tokens) {
         if(tokens.length < 3) {
-            throw new IllegalArgumentException(TAG_ERROR_MSG);
+            String errorMsg = tokens[0].equals("tag") ? TAG_ERROR_MSG : DTAG_ERROR_MSG;
+            throw new IllegalArgumentException(errorMsg);
         }
         int index = Integer.parseInt(tokens[1]) - 1;
         for (int i = 2; i < tokens.length; i++) {
             String potentialTag = tokens[i];
             if (!Pattern.matches(TAG_PATTERN, potentialTag)) {
-                throw new IllegalArgumentException(TAG_ERROR_MSG);
+                String errorMsg = tokens[0].equals("tag") ? TAG_ERROR_MSG : DTAG_ERROR_MSG;
+                throw new IllegalArgumentException(errorMsg);
             }
         }
         if (index < 0 || index >= size) {
