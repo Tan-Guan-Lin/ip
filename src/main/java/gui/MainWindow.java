@@ -45,7 +45,7 @@ public class MainWindow extends AnchorPane {
     public void greetUser() {
         String greetings = UI.greet();
         dialogContainer.getChildren().addAll(
-                DialogBox.getDukeDialog(greetings, BARA_IMAGE)
+                DialogBox.getBaraDialog(greetings, BARA_IMAGE)
         );
     }
 
@@ -59,7 +59,7 @@ public class MainWindow extends AnchorPane {
         String response = bara.run(input);
         dialogContainer.getChildren().addAll(
                 DialogBox.getUserDialog(input, USER_IMAGE),
-                DialogBox.getDukeDialog(response, BARA_IMAGE)
+                DialogBox.getBaraDialog(response, BARA_IMAGE)
         );
         if(input.equals("bye")) {
             handleExit();
