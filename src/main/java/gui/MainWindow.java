@@ -3,6 +3,7 @@ package gui;
 import java.util.Objects;
 
 import bara.Bara;
+import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -11,12 +12,14 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.util.Duration;
 import ui.UI;
 
 /**
  * Controller for the main GUI.
  */
 public class MainWindow extends AnchorPane {
+    public static final String BYE_RESPONSE = "Bye. Hope to see you again soon! Stay chill like a capybara! \uD83E\uDDA6\n";
     @FXML
     private ScrollPane scrollPane;
     @FXML
@@ -61,11 +64,14 @@ public class MainWindow extends AnchorPane {
                 DialogBox.getUserDialog(input, USER_IMAGE),
                 DialogBox.getBaraDialog(response, BARA_IMAGE)
         );
-        if(input.equals("bye")) {
-            handleExit();
+        if(response.equals(BYE_RESPONSE)) {
+            PauseTransition delay = new PauseTransition(Duration.seconds(2));
+            delay.setOnFinished(event -> handleExit());
+            delay.play();
         }
         userInput.clear();
     }
+
 
 
     @FXML

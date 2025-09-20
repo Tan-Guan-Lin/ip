@@ -13,7 +13,7 @@ public class UI {
     }
 
     public static String showExit() {
-        return "Bye. Hope to see you again soon! \n";
+        return "Bye. Hope to see you again soon! Stay chill like a capybara! \uD83E\uDDA6\n";
     };
 
 }
