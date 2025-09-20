@@ -7,7 +7,7 @@ Hello there! I'm Bara-Bara, your friendly capybara assistant! I'm here to help y
 ## Quick start
 
 1. Ensure you have Java **17 or above** installed on your Computer.
-2. Download the latest `bara-bara.jar` file from the releases page.
+2. Download the latest `bara.jar` file from the releases page.
 3. Copy the file to the folder you want to use as the home folder for Bara-Bara.
 4. Open a command terminal, `cd` into the folder containing the jar file, and use `java -jar bara-bara.jar` to run the application.
 5. Type commands in the command box and press Enter to execute them.
@@ -211,7 +211,7 @@ A: Use `dtag` with all the tags currently on the task, or you can't remove all t
 
 Bara-Bara data is saved automatically after any command that changes the data. There is no need to save manually. Your tasks are stored in a data file in the same directory as the application.
 
-:exclamation: **Note**: If you edit the data file directly and make incorrect changes, Bara-Bara might start with an empty task list. It's recommended to backup the data file before editing.
+**Note**: If you edit the data file directly and make incorrect changes, Bara-Bara might start with an empty task list. It's recommended to backup the data file before editing.
 
 ---
 
